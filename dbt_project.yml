@@ -1,0 +1,43 @@
+name: moneybox_analytics
+version: '1.0.0'
+config-version: 2
+profile: moneybox_analytics
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+flags:
+  send_anonymous_usage_stats: false
+
+models:
+  moneybox_analytics:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+    marts:
+      finance:
+        +materialized: table
+        +schema: marts_finance
+        +tags: ["finance"]
+      growth:
+        +materialized: table
+        +schema: marts_growth
+        +tags: ["growth"]
+      audit:
+        +materialized: table
+        +schema: marts_audit
+        +tags: ["audit"]
+
+seeds:
+  moneybox_analytics:
+    account_closure_corrections:
+      +schema: intermediate
+      +column_types:
+        account_id: bigint
+        corrected_closed_at: date
+        correction_reason: string
