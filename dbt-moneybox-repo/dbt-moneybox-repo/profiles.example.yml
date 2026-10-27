@@ -1,0 +1,21 @@
+# Copy to ~/.dbt/profiles.yml and fill in host + http_path.
+# Adapter docs: https://docs.getdbt.com/reference/warehouse-setups/databricks-setup
+moneybox_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      auth_type: oauth
+      host: <dbc-xxxxxxxxx.cloud.databricks.com>
+      http_path: /sql/1.0/warehouses/<warehouse-id>
+      catalog: workspace
+      schema: moneybox_dbt_dev
+      threads: 4
+    prod:
+      type: databricks
+      auth_type: oauth
+      host: <dbc-xxxxxxxxx.cloud.databricks.com>
+      http_path: /sql/1.0/warehouses/<warehouse-id>
+      catalog: workspace
+      schema: moneybox_dbt
+      threads: 8

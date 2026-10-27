@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: int_moneybox__transactions_canonical
+    description: >
+      Exact duplicates collapsed with audit counts. A repeated txn_id here
+      means conflicting versions exist — a data incident, not a fix.
+    columns:
+      - name: txn_id
+        tests: [unique, not_null]
+      - name: txn_type
+        tests:
+          - accepted_values:
+              values: ['deposit', 'withdrawal', 'govt_bonus', 'platform_fee']
+      - name: signed_amount
+        tests: [not_null]
+
+  - name: int_moneybox__account_lifecycle
+    columns:
+      - name: account_id
+        tests: [unique, not_null]
+      - name: lifecycle_quality_status
+        tests:
+          - accepted_values:
+              values: ['open', 'closure_date_corrected', 'missing_closure_date', 'reporting_closed_profile_deleted', 'closed_in_source']
+
+  - name: int_moneybox__account_monthly_snapshots
+    columns:
+      - name: month_end_date
+        tests: [not_null]
+      - name: account_id
+        tests: [not_null]
+      - name: active_at_month_end
+        tests: [not_null]

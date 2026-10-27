@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: mart_finance__monthly_aua
+    description: Month x product AUA with all-account vs reporting-open split.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [month_end_date, product_type]
+    columns:
+      - name: month_end_date
+        tests: [not_null]
+      - name: reporting_open_aua
+        tests: [not_null]
+      - name: reconciliation_gap
+        tests: [not_null]
+
+  - name: mart_growth__monthly_active_accounts_users
+    description: Headline monthly active accounts and active users.
+    columns:
+      - name: month_end_date
+        tests: [unique, not_null]
+      - name: active_accounts
+        tests: [not_null]
+      - name: active_users
+        tests: [not_null]
+
+  - name: mart_data_quality__monthly_audit
+    description: Exception counts feeding the Finance reconciliation.
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "closure_dates_still_missing = 0"

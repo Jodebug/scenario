@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: moneybox_raw
+    description: Fictional Moneybox practice data, frozen as of 2026-03-31.
+    catalog: workspace
+    schema: moneybox_practice_raw
+    # The practice fixture has no load timestamp; point loaded_at_field at a
+    # real ingestion column (e.g. _ingested_at) once one exists, then activate
+    # the freshness block below.
+    # loaded_at_field: _ingested_at
+    # freshness:
+    #   warn_after: {count: 24, period: hour}
+    #   error_after: {count: 48, period: hour}
+    tables:
+      - name: users
+      - name: accounts
+      - name: transactions

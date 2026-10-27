@@ -1,0 +1,2 @@
+account_id,corrected_closed_at,correction_reason
+104,2026-01-01,Confirmed missing closure event in synthetic practice dataset
